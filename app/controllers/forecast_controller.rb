@@ -3,12 +3,12 @@ require 'open-uri'
 class ForecastController < ApplicationController
   def coords_to_weather_form
     # Nothing to do here.
-    render("forecast/coords_to_weather_form.html.erb")
+    render("coords_to_weather_form.html.erb")
   end
 
   def coords_to_weather
-    @lat = params[:user_latitude]
-    @lng = params[:user_longitude]
+    @lat = params[:user_latitude].strip
+    @lng = params[:user_longitude].strip
 
     # ==========================================================================
     # Your code goes below.
@@ -16,18 +16,22 @@ class ForecastController < ApplicationController
     # The longitude the user input is in the string @lng.
     # ==========================================================================
 
+    url = "https://api.forecast.io/forecast/45cc125017539be94a3160f47972d764/#{@lat},#{@lng}"
 
+    raw_data = open(url).read
 
-    @current_temperature = "Replace this string with your answer."
+    parsed_data = JSON.parse(raw_data)
 
-    @current_summary = "Replace this string with your answer."
+    @current_temperature = parsed_data.dig("currently", "temperature")
 
-    @summary_of_next_sixty_minutes = "Replace this string with your answer."
+    @current_summary = parsed_data.dig("currently", "summary")
 
-    @summary_of_next_several_hours = "Replace this string with your answer."
+    @summary_of_next_sixty_minutes = parsed_data.dig("minutely", "summary")
 
-    @summary_of_next_several_days = "Replace this string with your answer."
+    @summary_of_next_several_hours = parsed_data.dig("hourly", "summary")
 
-    render("forecast/coords_to_weather.html.erb")
+    @summary_of_next_several_days = parsed_data.dig("daily", "summary")
+
+    render("coords_to_weather.html.erb")
   end
 end
