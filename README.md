@@ -2,14 +2,6 @@
 
 ## There is a Getting Started video on Canvas. Go watch that first.
 
-## Setup
-
- - Ensure that this repo has been forked to your own GitHub account.
- - Set up [a Cloud9 workspace as usual](https://guides.firstdraft.com/getting-started-with-cloud-9.html).
- - `bin/setup`
- - Run Project.
- - Go to the live app in Chrome.
-
 ## Introduction
 
 In this project, you will practice working with Arrays and Hashes by pulling data from external services like Google Maps. You will build an application that, given a street address, tells the user the weather forecast.
